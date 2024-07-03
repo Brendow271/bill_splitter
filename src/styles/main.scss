@@ -1,0 +1,7 @@
+// src/styles/main.scss
+@import 'variables';
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: $primary-color;
+}
