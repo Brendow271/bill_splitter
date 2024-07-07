@@ -1,8 +1,16 @@
 <template>
+<!--  style="background-color: aqua"
+style="background-color: rebeccapurple"
+style="background-color: red"
+
+      For test only!
+ -->
+
   <v-app>
-    <v-main>
-      <router-view></router-view>
-    </v-main>
+    <v-container>
+      <router-view>
+      </router-view>
+    </v-container>
   </v-app>
 </template>
 

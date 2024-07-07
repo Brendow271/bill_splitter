@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1>Home Page</h1>
-    <p>Welcome to the home page!</p>
+    <img src="../../public/images/logo.svg" alt="Logo" class="logo">
+    <div class="text-h1 text-white">
+      Bill Splitter
+    </div>
+    <v-btn :to="{ name: 'FriendList' }">Начать</v-btn>
   </div>
 </template>
 
