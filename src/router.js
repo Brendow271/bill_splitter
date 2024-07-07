@@ -11,21 +11,21 @@ const routes = [
             name: 'Home',
             component: Home
         },
-        // {
-        //     path: '/split',
-        //     name: 'Split',
-        //     component: Split
-        // },
         {
-            path: 'friend_list',
-            name: 'Friend_list',
+            path: '/split',
+            name: 'Split',
+            component: Split
+        },
+        {
+            path: '/friendList',
+            name: 'FriendList',
             component: FriendList
         },
-        // {
-        //     path: '/result',
-        //     name: 'Result',
-        //     component: Result
-        // }
+        {
+            path: '/result',
+            name: 'Result',
+            component: Result
+        }
     ]
 
 const router = createRouter({
