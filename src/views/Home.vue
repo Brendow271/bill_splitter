@@ -1,10 +1,13 @@
 <template>
-  <div>
+  <div class="home d-flex justify-center align-center flex-column">
     <img src="../../public/images/logo.svg" alt="Logo" class="logo">
-    <div class="text-h1 text-white">
+    <h1 class="text-white text-uppercase" id="logoName">
       Bill Splitter
-    </div>
-    <v-btn :to="{ name: 'FriendList' }">Начать</v-btn>
+    </h1>
+    <v-btn
+      :to="{ name: 'FriendList' }"
+      class="btnBegin text-white"
+    >Начать</v-btn>
   </div>
 </template>
 
@@ -13,7 +16,3 @@ export default {
   name: 'Home'
 }
 </script>
-
-<style scoped>
-/* Ваши стили */
-</style>
