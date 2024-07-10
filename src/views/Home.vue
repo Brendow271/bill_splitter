@@ -6,7 +6,7 @@
     </h1>
     <v-btn
       :to="{ name: 'FriendList' }"
-      class="btnBegin text-white"
+      class="btnNext btnHome text-white"
     >Начать</v-btn>
   </div>
 </template>

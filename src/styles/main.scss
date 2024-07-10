@@ -9,6 +9,16 @@ body {
     background-color: $primary-color;
     font-family: '$font-secondary';
 
+    .btnNext{
+      //position: absolute;
+      //margin-top: 60vh;
+      height: 5vh;
+      width: 12vw;
+      background-color:$dark-primary-color;
+      text-shadow: 1px 1px 2px saddlebrown;
+      font-size: 3vh;
+    }
+
     .home{
       margin-top: 40vh;
       #logoName {
@@ -21,15 +31,16 @@ body {
         z-index:0;
         height: 50vh;
       }
-      .btnBegin{
+      .btnHome{
         position: absolute;
         margin-top: 60vh;
-        height: 5vh;
-        width: 12vw;
-        background-color:$dark-primary-color;
-        text-shadow: 1px 1px 2px saddlebrown;
-        font-size: 3vh;
       }
+    }
+
+    .friend-list{
+
+
+
     }
 
 
