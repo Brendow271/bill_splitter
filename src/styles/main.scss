@@ -9,6 +9,24 @@ body {
     background-color: $primary-color;
     font-family: '$font-secondary';
 
+    .btnNext{
+      //position: absolute;
+      //margin-top: 60vh;
+      height: 5vh;
+      width: 12vw;
+      background-color:$dark-primary-color;
+      text-shadow: 1px 1px 2px saddlebrown;
+      font-size: 3vh;
+    }
+
+    .iconName{
+      background-color: $blue-icon-color;
+      width: 42px;
+      height: 42px;
+      border-radius: 5px;
+      color: white;
+    }
+
     .home{
       margin-top: 40vh;
       #logoName {
@@ -21,14 +39,41 @@ body {
         z-index:0;
         height: 50vh;
       }
-      .btnBegin{
+      .btnHome{
         position: absolute;
         margin-top: 60vh;
-        height: 5vh;
-        width: 12vw;
-        background-color:$dark-primary-color;
-        text-shadow: 1px 1px 2px saddlebrown;
-        font-size: 3vh;
+      }
+    }
+
+    .friend-list{
+      margin-top: 2vh;
+
+      .v-list{
+        background-color: $primary-color;
+      }
+
+      .list {
+        width: 80vw;
+        background-color: $primary-color;
+        padding: 10px;
+        border-radius: 8px;
+        border-color: white;
+      }
+
+      //.v-list-item {
+      //  display: flex;
+      //  flex-direction: row;
+      //  justify-content: space-between;
+      //
+      //}
+
+      #ListFriend{
+        text-shadow: 3px 3px 6px saddlebrown;
+      }
+
+      .delete{
+        width: 40px;
+        height: 40px;
       }
     }
 
