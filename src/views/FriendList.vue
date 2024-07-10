@@ -7,25 +7,29 @@
         <v-list-item
             v-for="(friend, index) in friends"
             :key="index"
-
         >
-          <v-avatar class="iconName">
-            <span class="avatar-text">{{ getAvatarText(friend.name) }}</span>
-          </v-avatar>
-
+          <template v-slot:prepend>
+            <v-avatar class="iconName">
+              <span class="avatar-text">{{ getAvatarText(friend.name) }}</span>
+            </v-avatar>
+          </template>
           <v-text-field
               v-model="friend.name"
               placeholder="Имя"
-              class="flex-grow-1"
+              class="ml-3"
               hide-details
           ></v-text-field>
-
-          <v-img
-              src="../../public/icons/Trash.svg"
-              @click="removeFriend(index)"
-              class="delete"
-          ></v-img>
-
+          <template v-slot:append>
+            <v-btn
+              icon
+              class="deleteBtn"
+              @click="removeFriend(index)">
+              <v-img
+                  src="../../public/icons/Trash.svg"
+                  class="delete"
+              ></v-img>
+            </v-btn>
+          </template>
         </v-list-item>
       </v-list>
 
@@ -40,7 +44,6 @@
         </v-col>
       </v-row>
     </div>
-
     <v-btn
         :to="{ name: 'Split' }"
         class="btnNext text-white"
@@ -50,25 +53,20 @@
 </template>
 
 <script>
+
+import {useFriendsStore} from '@/stores/friends.js';
+
 export default {
   name: 'FriendList',
-  data() {
+  setup() {
+    const friendsStore = useFriendsStore();
     return {
-      friends: [
-        {name: 'Гена'},
-        {name: ''}
-      ]
-    }
-  },
-  methods: {
-    addFriend() {
-      this.friends.push({name: ''});
-    },
-    removeFriend(index) {
-      this.friends.splice(index, 1);
-    },
-    getAvatarText(name) {
-      return name ? name.charAt(0).toUpperCase() : '?';
+      friends: friendsStore.friends,
+      addFriend: friendsStore.addFriend,
+      removeFriend: friendsStore.removeFriend,
+      getAvatarText(name) {
+        return name ? name.charAt(0).toUpperCase() : '?';
+      }
     }
   }
 }
