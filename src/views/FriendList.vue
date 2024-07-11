@@ -10,7 +10,7 @@
         >
           <template v-slot:prepend>
             <v-avatar class="iconName">
-              <span class="avatar-text">{{ getAvatarText(friend.name) }}</span>
+              <span>{{ getAvatarText(friend.name) }}</span>
             </v-avatar>
           </template>
           <v-text-field
@@ -21,7 +21,7 @@
           ></v-text-field>
           <template v-slot:append>
             <v-btn
-              icon
+              icon=""
               class="deleteBtn"
               @click="removeFriend(index)">
               <v-img

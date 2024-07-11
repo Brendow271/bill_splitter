@@ -27,6 +27,18 @@ body {
       color: white;
     }
 
+    .list {
+      width: 80vw;
+      background-color: $primary-color;
+      padding: 10px;
+      border-radius: 8px;
+      border-color: white;
+    }
+
+    .v-list{
+      background-color: $primary-color;
+    }
+
     .home{
       margin-top: 40vh;
       #logoName {
@@ -48,33 +60,41 @@ body {
     .friend-list{
       margin-top: 2vh;
 
-      .v-list{
-        background-color: $primary-color;
-      }
 
-      .list {
-        width: 80vw;
-        background-color: $primary-color;
-        padding: 10px;
-        border-radius: 8px;
-        border-color: white;
+      .v-list-item {
+        width: 100%;
       }
-
-      //.v-list-item {
-      //  display: flex;
-      //  flex-direction: row;
-      //  justify-content: space-between;
-      //
-      //}
 
       #ListFriend{
         text-shadow: 3px 3px 6px saddlebrown;
       }
 
-      .delete{
+      .deleteBtn{
         width: 40px;
         height: 40px;
+        background-color: $primary-color;
+        margin-left: 50px;
       }
+
+      .delete{
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    .split-page{
+
+      .positionName{
+        width: 30vw;
+      }
+
+
+      .positionPrice{
+        width: 30vw;
+      }
+
+
+
     }
 
 
