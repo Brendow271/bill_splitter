@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useFriendsStore = defineStore('friends', {
     state: () => ({
         friends: [{ name: '' }],
-        positions: [{ name: '', price: 0 }] // Начальная пустая позиция
+        positions: [{ name: '', price: 0, payerName: 'Плательщик'}] // Начальная пустая позиция
     }),
     actions: {
         addFriend() {
@@ -17,6 +17,13 @@ export const useFriendsStore = defineStore('friends', {
         },
         removePosition(index) {
             this.positions.splice(index, 1);
+        },
+        copyPosition(index){
+            let copiedElement = { ...this.positions[index] };
+            this.positions.splice(index + 1, 0, copiedElement);
         }
+        // choosePayer(index, payerName){
+        //     this.positions.get(index)
+        // }
     }
 });
