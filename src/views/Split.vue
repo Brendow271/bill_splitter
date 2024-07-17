@@ -7,47 +7,54 @@
         <v-list-item
             v-for="(position, index) in positions"
             :key="index"
+            class=""
         >
-          <template v-slot:prepend>
+          <div class="d-flex">
+
             <v-text-field
                 v-model="position.name"
                 placeholder="Название позиции"
-                class="positionName mr-5"
+                class="positionName mr-3"
             ></v-text-field>
-          </template>
-          <v-text-field
-              v-model="position.price"
-              type="number"
-              placeholder="Цена"
-              suffix="руб."
-              class="positionPrice"
-          ></v-text-field>
-          <template v-slot:append>
-            <v-btn icon @click="toggleDetails(index)"
-            class="ml-5">
+
+            <v-text-field
+                v-model="position.price"
+                type="number"
+                placeholder="Цена"
+                suffix="руб."
+                class="positionPrice"
+            ></v-text-field>
+
+            <v-btn icon @click="toggleDetails(index)" class="ml-3">
               <v-icon>{{ expandedIndex === index ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
             </v-btn>
-          </template>
-<!--          Выпадает только под v-text-field-->
+          </div>
+
           <v-expand-transition>
-            <div v-show="expandedIndex === index">
-              <p>Дополнительная информация о позиции: {{ position.name }}</p>
+            <div v-show="expandedIndex === index" class="details  ">
+              <p>Выбор должников должников</p>
+              <v-list>
+                <v-list-item v-for="friend in friends" :key="friend.name">
+                  <v-checkbox :label="friend.name" v-model="position.debtors" :value="friend.name"></v-checkbox>
+                </v-list-item>
+              </v-list>
             </div>
           </v-expand-transition>
-<!--          Выпадает только под v-text-field-->
+
         </v-list-item>
       </v-list>
       <v-row>
-        <v-col class="d-flex justify-center">
+        <v-col class="d-flex justify-center mb-3">
           <v-btn @click="addPosition" class="btnNext">+</v-btn>
         </v-col>
       </v-row>
       <hr/>
-      <span class="avatar-text">Итого: {{ total }} руб.</span>
+      <span class="text-white d-flex justify-end text-h5" id="finalValue">Итого: {{ total }} руб.</span>
     </div>
-    <v-btn :to="{ name: 'Result' }" class="btnNext text-white">Далее</v-btn>
+    <v-btn :to="{ name: 'Result' }" class="btnNext text-white mt-3">Далее</v-btn>
   </div>
 </template>
+
 
 <script>
 import {useFriendsStore} from '@/stores/friends';

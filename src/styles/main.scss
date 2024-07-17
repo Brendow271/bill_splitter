@@ -28,7 +28,7 @@ body {
     }
 
     .list {
-      width: 80vw;
+      width: 80%;
       background-color: $primary-color;
       padding: 10px;
       border-radius: 8px;
@@ -37,6 +37,7 @@ body {
 
     .v-list{
       background-color: $primary-color;
+      padding: 2%;
     }
 
     .home{
@@ -84,15 +85,25 @@ body {
 
     .split-page{
 
-      .positionName{
-        width: 30vw;
+      .position{
+        //width: 100%;
       }
 
+      .positionName{
+        width: 90%;
+      }
 
       .positionPrice{
-        width: 30vw;
+        //width: 30%;
       }
 
+      .details{
+
+      }
+
+      #finalValue{
+        text-shadow: 3px 3px 6px saddlebrown;
+      }
 
 
     }
