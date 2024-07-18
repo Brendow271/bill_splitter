@@ -28,8 +28,8 @@
             ></v-text-field>
 
             <v-btn
-              @click="toggleDetails(index)"
-              class="mt-1 mr-1 ml-3 bgDark"
+                @click="toggleDetails(index)"
+                class="mt-1 mr-1 ml-3 bgDark"
             >
               <v-img
                   :src="getImageUrl(index)"
@@ -41,9 +41,10 @@
           </div>
 
           <v-expand-transition>
-            <div v-show="expandedIndex === index" class="details w-100">
+            <div v-show="expandedIndex === index" class="w-100">
               <div class="d-flex justify-space-between">
 
+                <!--                Попап-->
                 <v-dialog
                     class="w-75">
                   <template v-slot:activator="{ props: activatorProps }">
@@ -52,12 +53,12 @@
                         class="w-75 bgDark dropDown"
                     >
                       <v-img
-                        src="../../public/icons/Wallet.svg"
-                        alt="Кошелек"
-                        width="30"
-                        class="mx-3"
-                    ></v-img>
-                      {{position.payerName}}
+                          src="../../public/icons/Wallet.svg"
+                          alt="Кошелек"
+                          width="30"
+                          class="mx-3"
+                      ></v-img>
+                      {{ position.payerName }}
                     </v-btn>
                   </template>
 
@@ -100,16 +101,45 @@
                 </v-btn>
 
               </div>
+              <span>Выбрать должников:</span>
+
+              <div class="d-flex justify-center">
+                <div class="d-flex flex-column pa-1">
+                  <v-btn block class="iconName">
+                    <span>{{ getAvatarText() }}</span>
+                  </v-btn>
+                  <span class="d-flex justify-center">Все</span>
+                </div>
+
+                <v-list class="pa-0 d-flex">
+                  <v-list-item
+                      v-for="(friend, index) in friends"
+                      :key="index"
+
+                      class="pa-1"
+                  >
+                    <div class="d-flex flex-column pa-0">
+                      <v-btn block class="iconName">
+                        <span>{{ getAvatarText(friend.name) }}</span>
+                      </v-btn>
+                      <span class="d-flex justify-center">{{ friend.name }}</span>
+                    </div>
+                  </v-list-item>
+                </v-list>
+              </div>
             </div>
+
           </v-expand-transition>
 
         </v-list-item>
       </v-list>
+
       <v-row>
         <v-col class="d-flex justify-center mb-3">
           <v-btn @click="addPosition" class="btnNext">+</v-btn>
         </v-col>
       </v-row>
+
       <hr/>
       <span class="text-white d-flex justify-end text-h5" id="finalValue">Итого: {{ total }} руб.</span>
     </div>
@@ -154,7 +184,12 @@ export default {
       return expandedIndex.value === index ? '../../public/icons/ArrowUp.svg' : '../../public/icons/ArrowDown.svg';
     };
 
+    const getAvatarText = (name) => {
+      return name ? name.charAt(0).toUpperCase() : 'All';
+    };
+
     return {
+      friends: friendsStore.friends,
       positions: friendsStore.positions,
       expandedIndex,
       toggleDetails,
@@ -162,7 +197,8 @@ export default {
       removePosition,
       copyPosition,
       total,
-      getImageUrl
+      getImageUrl,
+      getAvatarText
     };
   }
 }
