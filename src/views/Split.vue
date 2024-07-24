@@ -2,7 +2,7 @@
   <div class="split-page d-flex justify-center align-center flex-column mt-3">
     <div class="border-solid list">
       <h1 class="d-flex justify-center text-white" id="ListFriend">Чек</h1>
-      <hr/>
+      <v-divider></v-divider>
       <v-list>
         <v-list-item
             v-for="(position, index) in positions"
@@ -50,6 +50,7 @@
                   <template v-slot:activator="{ props: activatorProps }">
                     <v-btn
                         v-bind="activatorProps"
+                        @click="setSelectedPositionIndex(index)"
                         class="w-75 bgDark dropDown"
                     >
                       <v-img
@@ -63,18 +64,23 @@
                   </template>
 
                   <template v-slot:default="{ isActive }">
-                    <v-card title="Выберите плательщика">
-                      <Popup/>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-
-                        <v-btn
-                            text="Close Dialog"
-                            @click="isActive.value = false"
-                        ></v-btn>
-                      </v-card-actions>
-                    </v-card>
+                      <v-card title="Выберите плательщика"
+                              class="bgPrime ma-auto"
+                              min-width="70%"
+                              max-height="60%">
+                        <v-divider></v-divider>
+                        <Popup/>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                              text="Close Dialog"
+                              @click="
+                                isActive.value = false,
+                                setSelectedPositionIndex(null)
+                              "
+                          ></v-btn>
+                        </v-card-actions>
+                      </v-card>
                   </template>
                 </v-dialog>
 
@@ -115,7 +121,6 @@
                   <v-list-item
                       v-for="(friend, index) in friends"
                       :key="index"
-
                       class="pa-1"
                   >
                     <div class="d-flex flex-column pa-0">
@@ -140,7 +145,7 @@
         </v-col>
       </v-row>
 
-      <hr/>
+      <v-divider></v-divider>
       <span class="text-white d-flex justify-end text-h5" id="finalValue">Итого: {{ total }} руб.</span>
     </div>
     <v-btn :to="{ name: 'Result' }" class="btnNext text-white mt-3">Далее</v-btn>
@@ -165,7 +170,7 @@ export default {
     };
     const addPosition = () => {
       console.log('Adding position'); // Отладочное сообщение
-      friendsStore.addPosition({name: '', price: 0});
+      friendsStore.addPosition({name: '', price: 0, payerName: 'Плательщик', debtors: ['']});
     };
 
     const removePosition = (index) => {
@@ -188,6 +193,10 @@ export default {
       return name ? name.charAt(0).toUpperCase() : 'All';
     };
 
+    const setSelectedPositionIndex = (index) => {
+      return friendsStore.setSelectedPositionIndex(index);
+    }
+
     return {
       friends: friendsStore.friends,
       positions: friendsStore.positions,
@@ -198,7 +207,8 @@ export default {
       copyPosition,
       total,
       getImageUrl,
-      getAvatarText
+      getAvatarText,
+      setSelectedPositionIndex,
     };
   }
 }
