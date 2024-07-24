@@ -2,8 +2,9 @@ import { defineStore } from 'pinia';
 
 export const useFriendsStore = defineStore('friends', {
     state: () => ({
-        friends: [{ name: '' }],
-        positions: [{ name: '', price: 0, payerName: 'Плательщик'}] // Начальная пустая позиция
+        friends: [{ name: '' }, {name: 'Коля'}, {name: 'Петя'},{name: 'Биба'},{name: 'Боба'}],
+        positions: [{ name: '', price: '', payerName: 'Плательщик', debtors: ['']}],
+        selectedPositionIndex: null,
     }),
     actions: {
         addFriend() {
@@ -21,9 +22,18 @@ export const useFriendsStore = defineStore('friends', {
         copyPosition(index){
             let copiedElement = { ...this.positions[index] };
             this.positions.splice(index + 1, 0, copiedElement);
+        },
+        choosePayer(index, payerName) {
+            this.positions[index].payerName = payerName;
+        },
+        setSelectedPositionIndex(index) {
+            this.selectedPositionIndex = index;
+        },
+        chooseDebtor(index, payerName){
+            this.positions.get(index)
+        },
+        chooseAllDebtor(index, payerName){
+            this.positions.get(index)
         }
-        // choosePayer(index, payerName){
-        //     this.positions.get(index)
-        // }
     }
 });
