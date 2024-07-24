@@ -5,26 +5,19 @@
 body {
   font-family: '$font-primary', sans-serif;
   background-color: $primary-color;
+
   .v-application {
     background-color: $primary-color;
     font-family: '$font-secondary';
 
-    .btnNext{
+    .btnNext {
       //position: absolute;
       //margin-top: 60vh;
       height: 5vh;
       width: 12vw;
-      background-color:$dark-primary-color;
+      background-color: $dark-primary-color;
       text-shadow: 1px 1px 2px saddlebrown;
       font-size: 3vh;
-    }
-
-    .iconName{
-      background-color: $blue-icon-color;
-      width: 42px;
-      height: 42px;
-      border-radius: 5px;
-      color: white;
     }
 
     .list {
@@ -35,81 +28,123 @@ body {
       border-color: white;
     }
 
-    .v-list{
+    .v-list {
       background-color: $primary-color;
       padding: 2%;
       width: 100%
     }
 
-    .bgDark{
-      background-color: $dark-primary-color;
-    }
 
-
-
-    .home{
+    .home {
       margin-top: 40vh;
+
       #logoName {
         font-size: 10vh;
-        z-index:1;
+        z-index: 1;
         text-shadow: 3px 3px 6px saddlebrown;
       }
+
       .logo {
-        position:absolute;
-        z-index:0;
+        position: absolute;
+        z-index: 0;
         height: 50vh;
       }
-      .btnHome{
+
+      .btnHome {
         position: absolute;
         margin-top: 60vh;
       }
     }
 
-    .friend-list{
+    .friend-list {
       margin-top: 2vh;
 
-      #ListFriend{
+      #ListFriend {
         text-shadow: 3px 3px 6px saddlebrown;
       }
 
-      .deleteBtn{
+      .deleteBtn {
         width: 40px;
         height: 40px;
         background-color: $primary-color;
         margin-left: 50px;
       }
 
-      .delete{
+      .delete {
         width: 30px;
         height: 30px;
       }
     }
 
-    .split-page{
+    .split-page {
 
-      .positionBill{
+      .positionBill {
         //width: 100%;
       }
 
-      .positionName{
+      .positionName {
         width: 90%;
       }
 
-      .positionPrice{
+      .positionPrice {
         //width: 30%;
       }
 
-      #finalValue{
+      #finalValue {
         text-shadow: 3px 3px 6px saddlebrown;
       }
 
-      .dropDown{
+      .dropDown {
       }
+
+
     }
 
 
+  }
 
-    }
+
+  .openedPopup{
+    color: white;
+  }
+
+  .bgDark {
+    background-color: $dark-primary-color;
+  }
+
+  .bgPrime{
+    background-color: $primary-color;
+  }
+
+  .iconName {
+    background-color: $blue-icon-color;
+    width: 42px;
+    height: 42px;
+    border-radius: 5px;
+    color: white;
+  }
+
+  .custom-radio .v-input--selection-controls__input {
+    /* Изменение цвета внутреннего круга радиокнопки */
+    color: blue !important;
+  }
+
+  .custom-radio .v-input--selection-controls__ripple {
+    /* Стилизация эффекта ряби */
+    background-color: rgba(0, 0, 255, 0.2) !important;
+  }
+
+  .custom-radio .v-radio__outer-circle {
+    /* Изменение размера внешнего круга */
+    height: 24px;
+    width: 24px;
+  }
+
+  .custom-radio .v-radio__inner-circle {
+    /* Изменение размера внутреннего круга */
+    height: 12px;
+    width: 12px;
+  }
 
 
 }
