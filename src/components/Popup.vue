@@ -3,7 +3,7 @@
     <v-container fluid>
       <p>Имя плательщика: {{ selectedPayer }}</p>
 
-      <v-radio-group v-model="selectedPayer" @change="choosePayer" class="bgPrime">
+      <v-radio-group v-model="selectedPayer" @change="choosePayer">
         <v-list class="bgPrime">
           <v-list-item
               v-for="(friend, index) in friends"
@@ -27,7 +27,6 @@
                 ></v-radio>
               </v-list-item-action>
             </div>
-
           </v-list-item>
         </v-list>
       </v-radio-group>
@@ -46,7 +45,7 @@ export default {
     const selectedPositionIndex = friendsStore.selectedPositionIndex;
 
     const selectedPayer = ref(
-        friendsStore.friends[selectedPositionIndex]?.name || 'Плательщик'
+        friendsStore.positions[selectedPositionIndex]?.payerName || 'Плательщик'
     );
 
 
@@ -58,10 +57,6 @@ export default {
     const getAvatarText = (name) => {
       return name ? name.charAt(0).toUpperCase() : 'All';
     };
-
-    // const setSelectedPositionIndex = (index) => {
-    //   return friendsStore.setSelectedPositionIndex(index);
-    // }
 
     return {
       friends: friendsStore.friends,

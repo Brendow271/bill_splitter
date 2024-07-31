@@ -28,7 +28,7 @@
             ></v-text-field>
 
             <v-btn
-                @click="toggleDetails(index)"
+                @click="toggleDetails(index);"
                 class="mt-1 mr-1 ml-3 bgDark"
             >
               <v-img
@@ -50,7 +50,6 @@
                   <template v-slot:activator="{ props: activatorProps }">
                     <v-btn
                         v-bind="activatorProps"
-                        @click="setSelectedPositionIndex(index)"
                         class="w-75 bgDark dropDown"
                     >
                       <v-img
@@ -74,16 +73,13 @@
                           <v-spacer></v-spacer>
                           <v-btn
                               text="Close Dialog"
-                              @click="
-                                isActive.value = false,
-                                setSelectedPositionIndex(null)
-                              "
+                              @click="isActive.value = false"
                           ></v-btn>
                         </v-card-actions>
                       </v-card>
                   </template>
                 </v-dialog>
-
+                <!--       Конец         Попап-->
                 <v-btn
                     class="w-auto bgDark dropDown"
                     @click="copyPosition(index)">
@@ -111,22 +107,46 @@
 
               <div class="d-flex justify-center">
                 <div class="d-flex flex-column pa-1">
-                  <v-btn block class="iconName">
-                    <span>{{ getAvatarText() }}</span>
+                  <v-btn
+                      block
+                      class="iconName"
+                      @click="chooseAllDebtor(index)"
+                    >
+                    <template v-if="!checkSelectedAllDebtor(index)">
+                      {{getAvatarText()}}
+                    </template>
+                    <v-img
+                        src="../../public/icons/CheckMark.svg"
+                        alt="Галочка"
+                        width="30"
+                        v-if="checkSelectedAllDebtor(index)"
+                    ></v-img>
                   </v-btn>
                   <span class="d-flex justify-center">Все</span>
                 </div>
-
                 <v-list class="pa-0 d-flex">
                   <v-list-item
-                      v-for="(friend, index) in friends"
-                      :key="index"
+                      v-for="(friend, indexDebtor) in friends"
+                      :key="indexDebtor"
                       class="pa-1"
                   >
                     <div class="d-flex flex-column pa-0">
-                      <v-btn block class="iconName">
-                        <span>{{ getAvatarText(friend.name) }}</span>
+                      <v-btn
+                          block
+                          class="iconName"
+                          @click="chooseDebtor(index, friend.name)"
+                          >
+                        <v-container v-if="!checkSelectedDebtor(index, friend.name)">
+                          {{getAvatarText(friend.name)}}
+                        </v-container>
+                        <v-img
+                            src="../../public/icons/CheckMark.svg"
+                            alt="Галочка"
+                            width="30"
+                            v-if="checkSelectedDebtor(index, friend.name)"
+                        ></v-img>
                       </v-btn>
+
                       <span class="d-flex justify-center">{{ friend.name }}</span>
                     </div>
                   </v-list-item>
@@ -157,24 +177,29 @@
 import {useFriendsStore} from '@/stores/friends';
 import {ref, computed} from 'vue';
 import Popup from "@/components/Popup.vue";
+import {tr} from "vuetify/locale";
 
 export default {
   name: 'Split',
   components: {Popup},
   setup() {
     const friendsStore = useFriendsStore();
-    const expandedIndex = ref(null);
-
     const toggleDetails = (index) => {
-      expandedIndex.value = expandedIndex.value === index ? null : index;
+      if (expandedIndex.value === index) {
+        expandedIndex.value = null;
+        friendsStore.setSelectedPositionIndex(null);
+      } else {
+        expandedIndex.value = index;
+        friendsStore.setSelectedPositionIndex(index);
+      }
     };
+
+    const expandedIndex = ref(null);
     const addPosition = () => {
-      console.log('Adding position'); // Отладочное сообщение
-      friendsStore.addPosition({name: '', price: 0, payerName: 'Плательщик', debtors: ['']});
+      friendsStore.addPosition({name: '', price: '', payerName: 'Плательщик', debtors: ['']});
     };
 
     const removePosition = (index) => {
-      console.log('Removing position at index:', index); // Отладочное сообщение
       friendsStore.removePosition(index);
     };
     const copyPosition = (index) => {
@@ -195,7 +220,29 @@ export default {
 
     const setSelectedPositionIndex = (index) => {
       return friendsStore.setSelectedPositionIndex(index);
-    }
+    };
+
+    const chooseAllDebtor = (index) => {
+      friendsStore.chooseAllDebtor(index);
+    };
+
+    const chooseDebtor = (index, debtorName) => {
+      friendsStore.chooseDebtor(index, debtorName);
+    };
+
+
+    const checkSelectedAllDebtor = computed(() => (index) => {
+      const allDebtors = friendsStore.friends.map(friend => friend.name);
+      const debtors = friendsStore.positions[index].debtors;
+
+      return allDebtors.every(friend => debtors.includes(friend));
+    });
+
+    const checkSelectedDebtor = computed(() => (index, debtorName) => {
+      return friendsStore.positions[index].debtors.includes(debtorName);
+    });
+
+
 
     return {
       friends: friendsStore.friends,
@@ -209,6 +256,10 @@ export default {
       getImageUrl,
       getAvatarText,
       setSelectedPositionIndex,
+      chooseAllDebtor,
+      chooseDebtor,
+      checkSelectedAllDebtor,
+      checkSelectedDebtor,
     };
   }
 }

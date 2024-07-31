@@ -29,11 +29,23 @@ export const useFriendsStore = defineStore('friends', {
         setSelectedPositionIndex(index) {
             this.selectedPositionIndex = index;
         },
-        chooseDebtor(index, payerName){
-            this.positions.get(index)
+        chooseDebtor(index, debtorName){
+            const indexName = this.positions[index].debtors.indexOf(debtorName);
+            if (indexName >= 0)
+                this.positions[index].debtors.splice(indexName, 1);
+            else
+                this.positions[index].debtors.push(debtorName);
+
         },
-        chooseAllDebtor(index, payerName){
-            this.positions.get(index)
-        }
+        chooseAllDebtor(index){
+            let allDebtors  = this.friends.map(friend => friend.name);
+            console.log(allDebtors);
+            if (this.positions[index].debtors.length !== allDebtors.length || !this.positions[index].debtors.every((val, idx) => val === allDebtors[idx])) {
+                this.positions[index].debtors = allDebtors;
+            }
+            else
+                this.positions[index].debtors = [];
+
+        },
     }
 });
