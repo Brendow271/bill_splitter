@@ -196,7 +196,7 @@ export default {
 
     const expandedIndex = ref(null);
     const addPosition = () => {
-      friendsStore.addPosition({name: '', price: '', payerName: 'Плательщик', debtors: ['']});
+      friendsStore.addPosition({name: '', price: '', payerName: 'Плательщик', debtors: []});
     };
 
     const removePosition = (index) => {
