@@ -4,15 +4,17 @@
       <h1 class="d-flex justify-center text-white">Итог</h1>
       <v-divider></v-divider>
       <div class="d-flex justify-center w-auto">
-        <v-btn @click="setMode(modes.WHO_TO_WHOM)" text="Кто-Кому" class="bgDark w-50 ma-1" :class="{ 'border-solid': currentMode === modes.WHO_TO_WHOM }">
+        <v-btn @click="setMode(modes.WHO_TO_WHOM)" text="Кто-Кому" class="bgDark w-50 ma-1 text-white"
+               :class="{ 'border-solid': currentMode === modes.WHO_TO_WHOM }">
         </v-btn>
-        <v-btn @click="setMode(modes.WHOM_TO_WHO)" text="Кому-Кто" class="bgDark w-50 ma-1" :class="{ 'border-solid': currentMode === modes.WHOM_TO_WHO }">
+        <v-btn @click="setMode(modes.WHOM_TO_WHO)" text="Кому-Кто" class="bgDark w-50 ma-1 text-white"
+               :class="{ 'border-solid': currentMode === modes.WHOM_TO_WHO }">
         </v-btn>
       </div>
       <v-divider></v-divider>
 
       <!-- Отображение "Кто-Кому" -->
-      <v-list v-if="currentMode === modes.WHO_TO_WHOM" class="pa-0">
+      <v-list v-if="currentMode === modes.WHO_TO_WHOM" class="pa-0 text-white">
         <v-list-item
             v-for="(friend, index) in friends"
             :key="index"
@@ -25,14 +27,14 @@
               <v-table fixed-header class="bgDark">
                 <thead>
                 <tr>
-                  <th class="text-center bgDark">Кому должен</th>
-                  <th class="text-center bgDark">Сумма, руб.</th>
+                  <th class="text-center bgDark text-white">Кому должен</th>
+                  <th class="text-center bgDark text-white">Сумма, руб.</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(debtor, indexDebtor) in resultList[friend.name]" :key="indexDebtor">
-                  <td>{{ debtor.name }}</td>
-                  <td>{{ debtor.sum }}</td>
+                <tr v-for="(debtor, indexDebtor) in resultListWhoToWhom[friend.name]" :key="indexDebtor">
+                  <td class="text-white">{{ debtor.name }}</td>
+                  <td class="text-white">{{ debtor.sum }}</td>
                 </tr>
                 </tbody>
               </v-table>
@@ -51,7 +53,7 @@
             :key="index"
             class="pa-1 w-100"
         >
-          <div class="bgDark pa-2 rounded text-center">
+          <div class="bgDark pa-2 rounded text-center text-white">
             <template v-if="checkNeed(friend.name)">
               <span>Пользователю {{ friend.name }} должны</span>
               <v-divider></v-divider>
@@ -63,7 +65,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(debtor, indexDebtor) in resultList[friend.name]" :key="indexDebtor">
+                <tr v-for="(debtor, indexDebtor) in resultListWhomToWho[friend.name]" :key="indexDebtor">
                   <td>{{ debtor.name }}</td>
                   <td>{{ debtor.sum }}</td>
                 </tr>
@@ -81,8 +83,8 @@
 </template>
 
 <script>
-import { useFriendsStore } from "@/stores/friends.js";
-import { reactive, ref } from "vue";
+import {useFriendsStore} from "@/stores/friends.js";
+import {reactive, ref} from "vue";
 
 export default {
   name: "Result",
@@ -90,39 +92,39 @@ export default {
     const friendsStore = useFriendsStore();
     const friends = friendsStore.friends;
     const positions = friendsStore.positions;
-    const resultList = reactive({});
+    const resultListWhoToWhom = reactive({});
+    const resultListWhomToWho = reactive({});
     const modes = {
       WHO_TO_WHOM: 'whoToWhom',
       WHOM_TO_WHO: 'whomToWho',
     };
     const currentMode = ref(modes.WHO_TO_WHOM);
 
-    const calculateResults = () => {
+    const summarizeResultsWhomToWho = () => {
+
       friends.forEach((friend) => {
-        resultList[friend.name] = [];
+        resultListWhomToWho[friend.name] = [];
         positions.forEach((position) => {
           if (position.payerName === friend.name) {
             position.debtors.forEach((debtorName) => {
               if (friend.name !== debtorName) {
-                const existingDebtor = resultList[friend.name].find(debtor => debtor.name === debtorName);
+                const existingDebtor = resultListWhomToWho[friend.name].find(debtor => debtor.name === debtorName);
                 const debtAmount = Math.round(parseFloat(position.price) / position.debtors.length);
                 if (existingDebtor) {
                   existingDebtor.sum += debtAmount;
                 } else {
-                  resultList[friend.name].push({ name: debtorName, sum: debtAmount });
+                  resultListWhomToWho[friend.name].push({name: debtorName, sum: debtAmount});
                 }
               }
             });
           }
         });
       });
-    };
 
-    const summarizeResultsWhomToWho = () => {
       friends.forEach((friend) => {
-        resultList[friend.name].forEach((debtor) => {
-          if (resultList[debtor.name]) {
-            const reverseDebt = resultList[debtor.name].find(item => item.name === friend.name);
+        resultListWhomToWho[friend.name].forEach((debtor) => {
+          if (resultListWhomToWho[debtor.name]) {
+            const reverseDebt = resultListWhomToWho[debtor.name].find(item => item.name === friend.name);
             if (reverseDebt) {
               if (debtor.sum > reverseDebt.sum) {
                 debtor.sum -= reverseDebt.sum;
@@ -134,39 +136,89 @@ export default {
             }
           }
         });
-        resultList[friend.name] = resultList[friend.name].filter(debtor => debtor.sum > 0);
+        resultListWhomToWho[friend.name] = resultListWhomToWho[friend.name].filter(debtor => debtor.sum > 0);
       });
     };
 
+    const summarizeResultsWhoToWhom = () => {
+
+      friends.forEach((friend) => {
+        resultListWhoToWhom[friend.name] = []; // записали чела как должника
+        positions.forEach((position) => { //для каждой позиции
+          position.debtors.forEach((debtor) => { //для каждого должника
+            if (debtor === friend.name) { //проверяем если имя должника совпало с именем чела
+              const existingPayer = resultListWhoToWhom[friend.name].find(payer => payer.name === position.payerName);
+              const payerAmount = Math.round(parseFloat(position.price) / position.debtors.length);
+
+              if (existingPayer) {
+                existingPayer.sum += payerAmount;
+              } else {
+                resultListWhoToWhom[friend.name].push({name: position.payerName, sum: payerAmount});
+              }
+            }
+          })
+        })
+      })
+
+
+      friends.forEach((friend) => {
+        if (resultListWhoToWhom[friend.name]) {
+          resultListWhoToWhom[friend.name].forEach((payer) => {
+            if (resultListWhoToWhom[payer.name]) {
+
+              const reversePayer = resultListWhoToWhom[payer.name].find(payer => payer.name === friend.name);
+
+              if (reversePayer) {
+                if (payer.sum > reversePayer.sum) {
+                  payer.sum -= reversePayer.sum;
+                  reversePayer.sum = 0;
+                } else {
+                  reversePayer.sum -= payer.sum;
+                  payer.sum = 0;
+                }
+              }
+            }
+          });
+          resultListWhoToWhom[friend.name] = resultListWhoToWhom[friend.name].filter(payer => payer.sum > 0);
+        }
+      });
+    }
 
 
 
 
-    const checkNeed = (friendName) => {
-      return resultList[friendName] && resultList[friendName].length > 0;
-    };
 
-    // const checkContainPayer = (friendName) =>
-    // {
-    //   resultList.
-    // }
 
-    const setMode = (mode) => {
-      currentMode.value = mode;
-    };
+  const checkNeed = (friendName) => {
+    if (currentMode.value === modes.WHOM_TO_WHO)
+      return resultListWhomToWho[friendName] && resultListWhomToWho[friendName].length > 0;
+    else
+      return resultListWhoToWhom[friendName] && resultListWhoToWhom[friendName].length > 0
+  };
 
-    calculateResults();
-    summarizeResultsWhomToWho();
+  // const checkContainPayer = (friendName) =>
+  // {
+  //   resultList.
+  // }
 
-    return {
-      friends,
-      resultList,
-      checkNeed,
-      setMode,
-      currentMode,
-      modes,
+  const setMode = (mode) => {
+    currentMode.value = mode;
+  };
 
-    };
-  },
-};
+  summarizeResultsWhomToWho();
+  summarizeResultsWhoToWhom();
+
+  return {
+    friends,
+    checkNeed,
+    setMode,
+    currentMode,
+    modes,
+    resultListWhomToWho,
+    resultListWhoToWhom,
+  };
+}
+,
+}
+;
 </script>
