@@ -11,7 +11,6 @@
               class="pa-1"
           >
             <div class="d-flex justify-space-between">
-
               <v-list-item-avatar class="iconName ml-0">
                 <span class="d-flex justify-center my-2">{{ getAvatarText(friend.name) }}</span>
               </v-list-item-avatar>
@@ -23,7 +22,6 @@
               <v-list-item-action class="mr-0">
                 <v-radio
                     :value="friend.name"
-                    class="custom-radio"
                 ></v-radio>
               </v-list-item-action>
             </div>
@@ -32,38 +30,42 @@
       </v-radio-group>
     </v-container>
   </div>
-
 </template>
 
 <script>
-import {useFriendsStore} from '../stores/friends.js';
-import {ref} from "vue";
+import { useFriendsStore } from '../stores/friends.js';
+import { ref, watch } from 'vue';
 
 export default {
-  setup() {
+  name: 'Popup',
+  props: {
+    selectedPayer: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props, { emit }) {
     const friendsStore = useFriendsStore();
-    const selectedPositionIndex = friendsStore.selectedPositionIndex;
-
-    const selectedPayer = ref(
-        friendsStore.positions[selectedPositionIndex]?.payerName || 'Плательщик'
-    );
-
+    const selectedPayer = ref(props.selectedPayer);
 
     const choosePayer = () => {
-      if (selectedPositionIndex !== null) {
-        friendsStore.choosePayer(selectedPositionIndex, selectedPayer.value);
-      }
+      emit('update-payer', selectedPayer.value);
     };
+
     const getAvatarText = (name) => {
       return name ? name.charAt(0).toUpperCase() : 'All';
     };
+
+    watch(selectedPayer, (newValue) => {
+      emit('update-payer', newValue);
+    });
 
     return {
       friends: friendsStore.friends,
       selectedPayer,
       choosePayer,
-      getAvatarText
-    }
-  },
+      getAvatarText,
+    };
+  }
 }
 </script>
