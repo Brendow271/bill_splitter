@@ -3,21 +3,41 @@
 @import "fonts";
 
 body {
-  font-family: '$font-primary', sans-serif;
+  font-family: '$font-secondary', '$font-primary', serif;
   background-color: $primary-color;
+
+  .openedPopup{
+    color: white;
+  }
+
+  .bgDark {
+    background-color: $dark-primary-color !important;
+  }
+
+  .bgPrime{
+    background-color: $primary-color !important;
+  }
+
+  .iconName {
+    background-color: $blue-icon-color;
+    width: 42px;
+    height: 42px;
+    border-radius: 5px;
+    color: white;
+  }
+
+  .v-selection-control__input input{
+    opacity: 1;
+  }
 
   .v-application {
     background-color: $primary-color;
-    font-family: '$font-secondary';
 
     .btnNext {
-      //position: absolute;
-      //margin-top: 60vh;
-      height: 5vh;
-      width: 12vw;
+      width: 15%;
       background-color: $dark-primary-color;
       text-shadow: 1px 1px 2px saddlebrown;
-      font-size: 3vh;
+      font-size: 25px;
     }
 
     .list {
@@ -36,10 +56,10 @@ body {
 
 
     .home {
-      margin-top: 40vh;
+      margin-top: 15%;
 
       #logoName {
-        font-size: 10vh;
+        font-size: 100px;
         z-index: 1;
         text-shadow: 3px 3px 6px saddlebrown;
       }
@@ -47,20 +67,24 @@ body {
       .logo {
         position: absolute;
         z-index: 0;
-        height: 50vh;
+        width: 35%;
       }
 
       .btnHome {
         position: absolute;
-        margin-top: 60vh;
+        margin-top: 40%;
       }
     }
 
     .friend-list {
-      margin-top: 2vh;
 
       #ListFriend {
         text-shadow: 3px 3px 6px saddlebrown;
+        font-size: 40px;
+      }
+
+      div{
+        font-size: 20px;
       }
 
       .deleteBtn {
@@ -78,73 +102,70 @@ body {
 
     .split-page {
 
-      .positionBill {
-        //width: 100%;
+
+      .iconName{
+        width: 50px;
+        height: 45px;
+      }
+
+      #Split{
+        text-shadow: 3px 3px 6px saddlebrown;
+        font-size: 40px;
+      }
+      .v-text-field {
+        font-size: 35px !important;
       }
 
       .positionName {
         width: 90%;
       }
 
-      .positionPrice {
-        //width: 30%;
-      }
-
       #finalValue {
         text-shadow: 3px 3px 6px saddlebrown;
+        font-size: 32px;
       }
 
-      .dropDown {
+      div{
+        font-size: 20px;
+      }
+
+      .dropDown{
+        width: 85%;
       }
 
 
     }
 
+    .result-page{
+
+      #Result{
+        text-shadow: 3px 3px 6px saddlebrown;
+        font-size: 40px;
+      }
+
+      .buttonSwitch{
+        width: 100%;
+
+        .v-btn{
+          width:45%;
+          font-size: 20px;
+        }
+      }
+
+      .text-center{
+        font-size: 20px;
+      }
+
+      tr{
+        font-size: 20px;
+      }
+
+    }
 
   }
 
 
-  .openedPopup{
-    color: white;
-  }
 
-  .bgDark {
-    background-color: $dark-primary-color;
-  }
-
-  .bgPrime{
-    background-color: $primary-color;
-  }
-
-  .iconName {
-    background-color: $blue-icon-color;
-    width: 42px;
-    height: 42px;
-    border-radius: 5px;
-    color: white;
-  }
-
-  .custom-radio .v-input--selection-controls__input {
-    /* Изменение цвета внутреннего круга радиокнопки */
-    color: blue !important;
-  }
-
-  .custom-radio .v-input--selection-controls__ripple {
-    /* Стилизация эффекта ряби */
-    background-color: rgba(0, 0, 255, 0.2) !important;
-  }
-
-  .custom-radio .v-radio__outer-circle {
-    /* Изменение размера внешнего круга */
-    height: 24px;
-    width: 24px;
-  }
-
-  .custom-radio .v-radio__inner-circle {
-    /* Изменение размера внутреннего круга */
-    height: 12px;
-    width: 12px;
-  }
 
 
 }

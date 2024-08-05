@@ -1,16 +1,15 @@
 <template>
   <div class="split-page d-flex justify-center align-center flex-column mt-3">
     <div class="border-solid list">
-      <h1 class="d-flex justify-center text-white" id="ListFriend">Чек</h1>
+      <h1 class="d-flex justify-center text-white" id="Split">Чек</h1>
       <v-divider></v-divider>
       <v-list>
         <v-list-item
             v-for="(position, index) in positions"
             :key="index"
-            class=""
+            class="text-white"
         >
-          <div class="d-flex positionBill">
-
+          <div class="d-flex">
             <v-text-field
                 variant="outlined"
                 v-model="position.name"
@@ -28,7 +27,7 @@
             ></v-text-field>
 
             <v-btn
-                @click="toggleDetails(index);"
+                @click="toggleDetails(index)"
                 class="mt-1 mr-1 ml-3 bgDark"
             >
               <v-img
@@ -43,14 +42,11 @@
           <v-expand-transition>
             <div v-show="expandedIndex === index" class="w-100">
               <div class="d-flex justify-space-between">
-
-                <!--                Попап-->
-                <v-dialog
-                    class="w-75">
+                <v-dialog class="w-75">
                   <template v-slot:activator="{ props: activatorProps }">
                     <v-btn
                         v-bind="activatorProps"
-                        class="w-75 bgDark dropDown"
+                        class="bgDark dropDown"
                     >
                       <v-img
                           src="../../public/icons/Wallet.svg"
@@ -58,31 +54,33 @@
                           width="30"
                           class="mx-3"
                       ></v-img>
-                      {{ position.payerName }}
+                      <span class="text-white">{{ position.payerName }}</span>
                     </v-btn>
                   </template>
 
                   <template v-slot:default="{ isActive }">
-                      <v-card title="Выберите плательщика"
-                              class="bgPrime ma-auto"
-                              min-width="70%"
-                              max-height="60%">
-                        <v-divider></v-divider>
-                        <Popup/>
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn
-                              text="Close Dialog"
-                              @click="isActive.value = false"
-                          ></v-btn>
-                        </v-card-actions>
-                      </v-card>
+                    <v-card title="Выберите плательщика"
+                            class="bgPrime ma-auto text-white"
+                            min-width="70%"
+                            max-height="60%">
+                      <v-divider></v-divider>
+                      <Popup :selected-payer="position.payerName" @update-payer="updatePayer(index, $event)"/>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            text="Закрыть окно"
+                            @click="isActive.value = false"
+                            class="text-white"
+                        ></v-btn>
+                      </v-card-actions>
+                    </v-card>
                   </template>
                 </v-dialog>
-                <!--       Конец         Попап-->
+
                 <v-btn
                     class="w-auto bgDark dropDown"
-                    @click="copyPosition(index)">
+                    @click="copyPosition(index)"
+                >
                   <v-img
                       src="../../public/icons/Copy.svg"
                       alt="Копия"
@@ -93,7 +91,8 @@
 
                 <v-btn
                     class="w-auto bgDark dropDown"
-                    @click="removePosition(index)">
+                    @click="removePosition(index)"
+                >
                   <v-img
                       src="../../public/icons/Trash.svg"
                       alt="Корзина"
@@ -101,7 +100,6 @@
                       class=""
                   ></v-img>
                 </v-btn>
-
               </div>
               <span>Выбрать должников:</span>
 
@@ -111,9 +109,9 @@
                       block
                       class="iconName"
                       @click="chooseAllDebtor(index)"
-                    >
+                  >
                     <template v-if="!checkSelectedAllDebtor(index)">
-                      {{getAvatarText()}}
+                      {{ getAvatarText() }}
                     </template>
                     <v-img
                         src="../../public/icons/CheckMark.svg"
@@ -135,9 +133,9 @@
                           block
                           class="iconName"
                           @click="chooseDebtor(index, friend.name)"
-                          >
+                      >
                         <v-container v-if="!checkSelectedDebtor(index, friend.name)">
-                          {{getAvatarText(friend.name)}}
+                          {{ getAvatarText(friend.name) }}
                         </v-container>
                         <v-img
                             src="../../public/icons/CheckMark.svg"
@@ -147,43 +145,46 @@
                         ></v-img>
                       </v-btn>
 
-                      <span class="d-flex justify-center">{{ friend.name }}</span>
+                      <span class="d-flex justify-center text-white">{{ friend.name }}</span>
                     </div>
                   </v-list-item>
                 </v-list>
               </div>
             </div>
-
           </v-expand-transition>
-
         </v-list-item>
       </v-list>
 
       <v-row>
         <v-col class="d-flex justify-center mb-3">
-          <v-btn @click="addPosition" class="btnNext">+</v-btn>
+          <v-btn @click="addPosition" class="btnNext text-white">+</v-btn>
         </v-col>
       </v-row>
 
       <v-divider></v-divider>
-      <span class="text-white d-flex justify-end text-h5" id="finalValue">Итого: {{ total }} руб.</span>
+      <span class="text-white d-flex justify-end" id="finalValue">Итого: {{ total }} руб.</span>
     </div>
-    <v-btn :to="{ name: 'Result' }" class="btnNext text-white mt-3">Далее</v-btn>
+    <v-btn
+        v-if="canProceed"
+        :to="{ name: 'Result' }"
+        class="btnNext text-white mt-3"
+    >Далее</v-btn>
   </div>
 </template>
 
-
 <script>
-import {useFriendsStore} from '@/stores/friends';
-import {ref, computed} from 'vue';
+import { useFriendsStore } from '@/stores/friends';
+import { ref, computed } from 'vue';
 import Popup from "@/components/Popup.vue";
-import {tr} from "vuetify/locale";
 
 export default {
   name: 'Split',
-  components: {Popup},
+  components: { Popup },
   setup() {
     const friendsStore = useFriendsStore();
+
+    const expandedIndex = ref(null);
+
     const toggleDetails = (index) => {
       if (expandedIndex.value === index) {
         expandedIndex.value = null;
@@ -194,14 +195,14 @@ export default {
       }
     };
 
-    const expandedIndex = ref(null);
     const addPosition = () => {
-      friendsStore.addPosition({name: '', price: '', payerName: 'Плательщик', debtors: []});
+      friendsStore.addPosition({ name: '', price: '', payerName: 'Плательщик', debtors: [] });
     };
 
     const removePosition = (index) => {
       friendsStore.removePosition(index);
     };
+
     const copyPosition = (index) => {
       friendsStore.copyPosition(index);
     };
@@ -218,10 +219,6 @@ export default {
       return name ? name.charAt(0).toUpperCase() : 'All';
     };
 
-    const setSelectedPositionIndex = (index) => {
-      return friendsStore.setSelectedPositionIndex(index);
-    };
-
     const chooseAllDebtor = (index) => {
       friendsStore.chooseAllDebtor(index);
     };
@@ -229,7 +226,6 @@ export default {
     const chooseDebtor = (index, debtorName) => {
       friendsStore.chooseDebtor(index, debtorName);
     };
-
 
     const checkSelectedAllDebtor = computed(() => (index) => {
       const allDebtors = friendsStore.friends.map(friend => friend.name);
@@ -242,7 +238,18 @@ export default {
       return friendsStore.positions[index].debtors.includes(debtorName);
     });
 
+    const canProceed = computed(() => {
+      return friendsStore.positions.every(position => {
+        return position.name.trim() !== '' &&
+            position.price > 0 &&
+            position.payerName !== 'Плательщик' &&
+            position.debtors.length > 0;
+      });
+    });
 
+    const updatePayer = (index, payerName) => {
+      friendsStore.positions[index].payerName = payerName;
+    };
 
     return {
       friends: friendsStore.friends,
@@ -255,11 +262,12 @@ export default {
       total,
       getImageUrl,
       getAvatarText,
-      setSelectedPositionIndex,
       chooseAllDebtor,
       chooseDebtor,
       checkSelectedAllDebtor,
       checkSelectedDebtor,
+      canProceed,
+      updatePayer,
     };
   }
 }

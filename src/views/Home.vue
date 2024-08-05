@@ -1,6 +1,6 @@
 <template>
   <div class="home d-flex justify-center align-center flex-column">
-    <img src="../../public/images/logo.svg" alt="Logo" class="logo">
+    <v-img src="../../public/images/logo.svg" alt="Logo" class="logo"/>
     <h1 class="text-white text-uppercase" id="logoName">
       Bill Splitter
     </h1>
