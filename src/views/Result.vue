@@ -1,13 +1,13 @@
 <template>
   <div class="result-page d-flex justify-center align-center flex-column mt-3">
     <div class="border-solid list">
-      <h1 class="d-flex justify-center text-white">Итог</h1>
+      <h1 class="d-flex justify-center text-white" id="Result">Итог</h1>
       <v-divider></v-divider>
-      <div class="d-flex justify-center w-auto">
-        <v-btn @click="setMode(modes.WHO_TO_WHOM)" text="Кто-Кому" class="bgDark w-50 ma-1 text-white"
+      <div class="d-flex justify-space-between buttonSwitch">
+        <v-btn @click="setMode(modes.WHO_TO_WHOM)" text="Кто-Кому" class="bgDark ma-1 text-white"
                :class="{ 'border-solid': currentMode === modes.WHO_TO_WHOM }">
         </v-btn>
-        <v-btn @click="setMode(modes.WHOM_TO_WHO)" text="Кому-Кто" class="bgDark w-50 ma-1 text-white"
+        <v-btn @click="setMode(modes.WHOM_TO_WHO)" text="Кому-Кто" class="bgDark ma-1 text-white"
                :class="{ 'border-solid': currentMode === modes.WHOM_TO_WHO }">
         </v-btn>
       </div>
@@ -60,14 +60,14 @@
               <v-table fixed-header class="bgDark">
                 <thead>
                 <tr>
-                  <th class="text-center bgDark">Кто должен</th>
-                  <th class="text-center bgDark">Сумма, руб.</th>
+                  <th class="text-center text-white bgDark">Кто должен</th>
+                  <th class="text-center text-white bgDark">Сумма, руб.</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(debtor, indexDebtor) in resultListWhomToWho[friend.name]" :key="indexDebtor">
-                  <td>{{ debtor.name }}</td>
-                  <td>{{ debtor.sum }}</td>
+                  <td class="text-white">{{ debtor.name }}</td>
+                  <td class="text-white">{{ debtor.sum }}</td>
                 </tr>
                 </tbody>
               </v-table>
@@ -143,10 +143,10 @@ export default {
     const summarizeResultsWhoToWhom = () => {
 
       friends.forEach((friend) => {
-        resultListWhoToWhom[friend.name] = []; // записали чела как должника
-        positions.forEach((position) => { //для каждой позиции
-          position.debtors.forEach((debtor) => { //для каждого должника
-            if (debtor === friend.name) { //проверяем если имя должника совпало с именем чела
+        resultListWhoToWhom[friend.name] = [];
+        positions.forEach((position) => {
+          position.debtors.forEach((debtor) => {
+            if (debtor === friend.name) {
               const existingPayer = resultListWhoToWhom[friend.name].find(payer => payer.name === position.payerName);
               const payerAmount = Math.round(parseFloat(position.price) / position.debtors.length);
 

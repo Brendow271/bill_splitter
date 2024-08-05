@@ -2,8 +2,8 @@ import { defineStore } from 'pinia';
 
 export const useFriendsStore = defineStore('friends', {
     state: () => ({
-        friends: [{ name: '' }, {name: 'Коля'}, {name: 'Петя'},{name: 'Биба'},{name: 'Боба'}],
-        positions: [{ name: '', price: '', payerName: 'Плательщик', debtors: ['']}],
+        friends: [{name: ''}],
+        positions: [{ name: '', price: '', payerName: 'Плательщик', debtors: []},],
         selectedPositionIndex: null,
     }),
     actions: {
