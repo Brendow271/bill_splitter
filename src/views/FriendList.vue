@@ -2,33 +2,33 @@
   <div class="friend-list d-flex justify-center align-center flex-column mt-5">
     <div class="border-solid list">
       <h1 class="d-flex justify-center text-white" id="ListFriend">Список людей</h1>
-      <v-divider></v-divider>
+      <v-divider/>
       <v-list>
         <v-list-item
             v-for="(friend, index) in friends"
-            :key="index"
+            :key="friend.id"
         >
-          <template v-slot:prepend>
-            <v-avatar class="iconName">
-              <span>{{ getAvatarText(friend.name) }}</span>
-            </v-avatar>
+          <template #prepend>
+            <v-avatar
+                class="iconName"
+                :text="getAvatarText(friend.name)"
+            />
           </template>
           <v-text-field
               v-model="friend.name"
               placeholder="Имя"
               class="ml-3 text-white bgDark rounded"
               hide-details
-          ></v-text-field>
-          <template v-slot:append>
+          />
+          <template #append>
             <v-btn
-                icon=""
                 class="deleteBtn mr-1"
                 @click="removeFriend(index)"
             >
               <v-img
                   src="../../public/icons/Trash.svg"
                   class="delete"
-              ></v-img>
+              />
             </v-btn>
           </template>
         </v-list-item>
@@ -39,18 +39,17 @@
           <v-btn
               @click="addFriend"
               class="btnNext text-white"
-          >
-            +
-          </v-btn>
+              text="+"
+          />
         </v-col>
       </v-row>
     </div>
     <v-btn
         v-if="canProceed"
         :to="{ name: 'Split' }"
+        text="Далее"
         class="btnNext text-white mt-2"
-    >Далее
-    </v-btn>
+    />
   </div>
 </template>
 
