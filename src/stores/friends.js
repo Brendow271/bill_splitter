@@ -39,13 +39,11 @@ export const useFriendsStore = defineStore('friends', {
         },
         chooseAllDebtor(index){
             let allDebtors  = this.friends.map(friend => friend.name);
-            console.log(allDebtors);
             if (this.positions[index].debtors.length !== allDebtors.length || !this.positions[index].debtors.every((val, idx) => val === allDebtors[idx])) {
                 this.positions[index].debtors = allDebtors;
             }
             else
                 this.positions[index].debtors = [];
-
         },
     }
 });
