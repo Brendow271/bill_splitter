@@ -9,15 +9,12 @@ body {
   .openedPopup{
     color: white;
   }
-
   .bgDark {
     background-color: $dark-primary-color !important;
   }
-
   .bgPrime{
     background-color: $primary-color !important;
   }
-
   .iconName {
     background-color: $blue-icon-color;
     width: 42px;
@@ -25,11 +22,9 @@ body {
     border-radius: 5px;
     color: white;
   }
-
   .v-selection-control__input input{
     opacity: 1;
   }
-
   .v-application {
     background-color: $primary-color;
 
@@ -39,7 +34,6 @@ body {
       text-shadow: 1px 1px 2px saddlebrown;
       font-size: 25px;
     }
-
     .list {
       width: 80%;
       background-color: $primary-color;
@@ -47,29 +41,24 @@ body {
       border-radius: 8px;
       border-color: white;
     }
-
     .v-list {
       background-color: $primary-color;
       padding: 2%;
       width: 100%
     }
 
-
     .home {
       margin-top: 15%;
-
       #logoName {
         font-size: 100px;
         z-index: 1;
         text-shadow: 3px 3px 6px saddlebrown;
       }
-
       .logo {
         position: absolute;
         z-index: 0;
         width: 35%;
       }
-
       .btnHome {
         position: absolute;
         margin-top: 40%;
@@ -77,23 +66,19 @@ body {
     }
 
     .friend-list {
-
       #ListFriend {
         text-shadow: 3px 3px 6px saddlebrown;
         font-size: 40px;
       }
-
       div{
         font-size: 20px;
       }
-
       .deleteBtn {
         width: 40px;
         height: 40px;
         background-color: $primary-color;
         margin-left: 50px;
       }
-
       .delete {
         width: 30px;
         height: 30px;
@@ -101,13 +86,10 @@ body {
     }
 
     .split-page {
-
-
       .iconName{
         width: 50px;
         height: 45px;
       }
-
       #Split{
         text-shadow: 3px 3px 6px saddlebrown;
         font-size: 40px;
@@ -115,34 +97,26 @@ body {
       .v-text-field {
         font-size: 35px !important;
       }
-
       .positionName {
         width: 90%;
       }
-
       #finalValue {
         text-shadow: 3px 3px 6px saddlebrown;
         font-size: 32px;
       }
-
       div{
         font-size: 20px;
       }
-
       .dropDown{
         width: 85%;
       }
-
-
     }
 
     .result-page{
-
       #Result{
         text-shadow: 3px 3px 6px saddlebrown;
         font-size: 40px;
       }
-
       .buttonSwitch{
         width: 100%;
 
@@ -151,7 +125,6 @@ body {
           font-size: 20px;
         }
       }
-
       .text-center{
         font-size: 20px;
       }
@@ -159,15 +132,6 @@ body {
       tr{
         font-size: 20px;
       }
-
     }
-
   }
-
-
-
-
-
 }
-
-
