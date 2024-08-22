@@ -5,9 +5,10 @@
       Bill Splitter
     </h1>
     <v-btn
-      :to="{ name: 'FriendList' }"
-      class="btnNext btnHome text-white"
-    >Начать</v-btn>
+        :to="{ name: 'FriendList' }"
+        class="btnNext btnHome text-white"
+        text="Начать"
+    />
   </div>
 </template>
 
