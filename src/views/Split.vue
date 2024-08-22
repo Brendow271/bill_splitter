@@ -2,11 +2,11 @@
   <div class="split-page d-flex justify-center align-center flex-column mt-3">
     <div class="border-solid list">
       <h1 class="d-flex justify-center text-white" id="Split">Чек</h1>
-      <v-divider></v-divider>
+      <v-divider/>
       <v-list>
         <v-list-item
             v-for="(position, index) in positions"
-            :key="index"
+            :key="position.id"
             class="text-white"
         >
           <div class="d-flex">
@@ -15,7 +15,7 @@
                 v-model="position.name"
                 placeholder="Название позиции"
                 class="positionName mr-3"
-            ></v-text-field>
+            />
 
             <v-text-field
                 variant="outlined"
@@ -24,7 +24,7 @@
                 placeholder="Цена"
                 suffix="руб."
                 class="positionPrice"
-            ></v-text-field>
+            />
 
             <v-btn
                 @click="toggleDetails(index)"
@@ -34,8 +34,7 @@
                   :src="getImageUrl(index)"
                   alt="Arrow Down or Up"
                   width="30"
-                  class=""
-              ></v-img>
+              />
             </v-btn>
           </div>
 
@@ -43,7 +42,7 @@
             <div v-show="expandedIndex === index" class="w-100">
               <div class="d-flex justify-space-between">
                 <v-dialog class="w-75">
-                  <template v-slot:activator="{ props: activatorProps }">
+                  <template #activator="{ props: activatorProps }">
                     <v-btn
                         v-bind="activatorProps"
                         class="bgDark dropDown"
@@ -53,25 +52,25 @@
                           alt="Кошелек"
                           width="30"
                           class="mx-3"
-                      ></v-img>
+                      />
                       <span class="text-white">{{ position.payerName }}</span>
                     </v-btn>
                   </template>
 
-                  <template v-slot:default="{ isActive }">
+                  <template #default="{ isActive }">
                     <v-card title="Выберите плательщика"
                             class="bgPrime ma-auto text-white"
                             min-width="70%"
                             max-height="60%">
-                      <v-divider></v-divider>
+                      <v-divider/>
                       <Popup :selected-payer="position.payerName" @update-payer="updatePayer(index, $event)"/>
                       <v-card-actions>
-                        <v-spacer></v-spacer>
+                        <v-spacer/>
                         <v-btn
                             text="Закрыть окно"
                             @click="isActive.value = false"
                             class="text-white"
-                        ></v-btn>
+                        />
                       </v-card-actions>
                     </v-card>
                   </template>
@@ -85,8 +84,7 @@
                       src="../../public/icons/Copy.svg"
                       alt="Копия"
                       width="30"
-                      class=""
-                  ></v-img>
+                  />
                 </v-btn>
 
                 <v-btn
@@ -97,8 +95,7 @@
                       src="../../public/icons/Trash.svg"
                       alt="Корзина"
                       width="30"
-                      class=""
-                  ></v-img>
+                  />
                 </v-btn>
               </div>
               <span>Выбрать должников:</span>
@@ -118,14 +115,14 @@
                         alt="Галочка"
                         width="30"
                         v-if="checkSelectedAllDebtor(index)"
-                    ></v-img>
+                    />
                   </v-btn>
-                  <span class="d-flex justify-center">Все</span>
+                  <span class="d-flex justify-center text-white">Все</span>
                 </div>
                 <v-list class="pa-0 d-flex">
                   <v-list-item
                       v-for="(friend, indexDebtor) in friends"
-                      :key="indexDebtor"
+                      :key="friend.id"
                       class="pa-1"
                   >
                     <div class="d-flex flex-column pa-0">
@@ -134,17 +131,17 @@
                           class="iconName"
                           @click="chooseDebtor(index, friend.name)"
                       >
-                        <v-container v-if="!checkSelectedDebtor(index, friend.name)">
-                          {{ getAvatarText(friend.name) }}
-                        </v-container>
-                        <v-img
+                        <v-container
+                            v-if="!checkSelectedDebtor(index, friend.name)"
+                            v-text="getAvatarText(friend.name)"
+                        />
+                          <v-img
                             src="../../public/icons/CheckMark.svg"
                             alt="Галочка"
                             width="30"
                             v-if="checkSelectedDebtor(index, friend.name)"
-                        ></v-img>
+                        />
                       </v-btn>
-
                       <span class="d-flex justify-center text-white">{{ friend.name }}</span>
                     </div>
                   </v-list-item>
@@ -157,25 +154,29 @@
 
       <v-row>
         <v-col class="d-flex justify-center mb-3">
-          <v-btn @click="addPosition" class="btnNext text-white">+</v-btn>
+          <v-btn
+              @click="addPosition"
+              class="btnNext text-white"
+              text="+"
+          />
         </v-col>
       </v-row>
-
-      <v-divider></v-divider>
-      <span class="text-white d-flex justify-end" id="finalValue">Итого: {{ total }} руб.</span>
+      <v-divider/>
+     <span class="text-white d-flex justify-end" id="finalValue">Итого: {{ total }} руб.</span>
     </div>
     <v-btn
         v-if="canProceed"
         :to="{ name: 'Result' }"
+        text="Далее"
         class="btnNext text-white mt-3"
-    >Далее</v-btn>
+    />
   </div>
 </template>
 
 <script>
 import { useFriendsStore } from '@/stores/friends';
 import { ref, computed } from 'vue';
-import Popup from "@/components/Popup.vue";
+import Popup from "@/components/PopupChoosePayer.vue";
 
 export default {
   name: 'Split',
