@@ -12,7 +12,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item, index) in list"
+          <tr v-for="(item) in list"
             :key="item.id"
           >
             <td class="text-white">{{ item.name }}</td>

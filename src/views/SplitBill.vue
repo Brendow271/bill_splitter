@@ -121,7 +121,7 @@
                 </div>
                 <v-list class="pa-0 d-flex">
                   <v-list-item
-                      v-for="(friend, indexDebtor) in friends"
+                      v-for="(friend) in friends"
                       :key="friend.id"
                       class="pa-1"
                   >

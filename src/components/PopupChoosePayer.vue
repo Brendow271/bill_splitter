@@ -6,7 +6,7 @@
       <v-radio-group v-model="selectedPayer">
         <v-list class="bgPrime">
           <v-list-item
-              v-for="(friend, index) in friends"
+              v-for="(friend) in friends"
               :key="friend.id"
               class="pa-1"
           >

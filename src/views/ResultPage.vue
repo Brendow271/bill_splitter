@@ -19,7 +19,7 @@
 
       <v-list v-if="currentMode === modes.WHO_TO_WHOM" class="pa-0 text-white">
         <DebtTable
-            v-for="(friend, index) in friends"
+            v-for="(friend) in friends"
             :key="friend.id"
             :list="resultListWhoToWhom[friend.name]"
             :checkNeed="checkNeed(friend.name)"
@@ -30,7 +30,7 @@
 
       <v-list v-if="currentMode === modes.WHOM_TO_WHO" class="pa-0 text-white">
         <DebtTable
-            v-for="(friend, index) in friends"
+            v-for="(friend) in friends"
             :key="friend.id"
             :list="resultListWhomToWho[friend.name]"
             :checkNeed="checkNeed(friend.name)"
