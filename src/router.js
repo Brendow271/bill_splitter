@@ -1,7 +1,7 @@
-import Home from "@/views/Home.vue"
+import Home from "@/views/HomePage.vue"
 import FriendList from "@/views/FriendList.vue";
-import Split from "@/views/Split.vue";
-import Result from "@/views/Result.vue";
+import Split from "@/views/SplitBill.vue";
+import Result from "@/views/ResultPage.vue";
 
 import { createRouter, createWebHistory } from 'vue-router'
 
