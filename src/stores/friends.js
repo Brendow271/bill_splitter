@@ -20,8 +20,7 @@ export const useFriendsStore = defineStore('friends', {
             this.positions.splice(index, 1);
         },
         copyPosition(index){
-            let copiedElement = { ...this.positions[index] };
-            this.positions.splice(index + 1, 0, copiedElement);
+            this.positions.splice(index + 1, 0, JSON.parse(JSON.stringify(this.positions[index])));
         },
         choosePayer(index, payerName) {
             this.positions[index].payerName = payerName;
